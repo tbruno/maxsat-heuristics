@@ -1,5 +1,5 @@
 c 
-c  Creado por docentes de la materia Modelos y Optimización I de 
+c  Creado por docentes de la materia Modelos y Optimizaciï¿½n I de 
 c  la Facultad de Ingenieria de la Universidad de Buenos Aires
 c
 p cnf 4 5 
@@ -7,8 +7,4 @@ p cnf 4 5
 1 4 0
 -3 0
 1 -2 0
-1 3 0
-
-
-
-
+2 3 0
