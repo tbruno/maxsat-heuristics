@@ -10,43 +10,30 @@ import ar.uba.fi.maxsat.domain.SATSolution;
 
 public class RandomSolvingStrategy extends SolvingStrategy {
 
+	private static final int AMOUNT_ITERATIONS = 10;
+
 	@Override
-	public SATSolution solve(SATProblem satProblem) {
-		SATSolution solution = new SATSolution();
-		
-		
-		
-		// Init values o variables according to randomness
+	public SATSolution solve(SATProblem satProblem) {	
+		SATSolution maxSolution = new SATSolution();
 		Random random = new Random();
-		Set<Integer> positiveValues = new HashSet<Integer>();
-		for(int i=0; i < satProblem.getAmountClauses(); i++){
-			if(random.nextDouble()<0.5){
-				positiveValues.add(i);
-			}
-		}
-		solution.positiveVars = positiveValues;
 		
-		// Evaluate clauses
-		for(Clause clause : satProblem.getClauses()){
-			
-			// Iterate through clause elements
-			boolean found = false;
-			for(Integer element : clause.getElements() ){				
-				if(positiveValues.contains(element) 
-						|| (element < 0 && !positiveValues.contains(-1*element))){					
-					found = true;
-					break;
+		for(int it=0;it<AMOUNT_ITERATIONS;it++){
+						
+			// Init values o variables according to randomness		
+			Set<Integer> positiveValues = new HashSet<Integer>();
+			for(int i=0; i < satProblem.getAmountClauses(); i++){
+				if(random.nextDouble()<0.5){
+					positiveValues.add(i);
 				}
-			}	
+			}
 			
-			if(found)
-				solution.fullfilledClauses.add(clause);			
-			else
-				solution.rejectedClauses.add(clause);
+			SATSolution solution = evaluateClauses(satProblem, positiveValues);
+			
+			if(solution.fullfilledClauses.size() > maxSolution.fullfilledClauses.size())
+				maxSolution = solution;
 		}
 		
-		solution.totalClauses = satProblem.getAmountClauses();
-		return solution;
+		return maxSolution;
 	}
 
 }
