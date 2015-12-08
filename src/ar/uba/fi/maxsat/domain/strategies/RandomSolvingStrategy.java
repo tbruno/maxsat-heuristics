@@ -21,7 +21,7 @@ public class RandomSolvingStrategy extends SolvingStrategy {
 						
 			// Init values o variables according to randomness		
 			Set<Integer> positiveValues = new HashSet<Integer>();
-			for(int i=0; i < satProblem.getAmountClauses(); i++){
+			for(int i=0; i < satProblem.getAmountVariables(); i++){
 				if(random.nextDouble()<0.5){
 					positiveValues.add(i);
 				}
